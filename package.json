@@ -9,6 +9,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.13.3"
+    "express": "^4.13.3",
+    "csv": "x.x",
+    "mongodb": "^2.0.49",
+    "mongoose": "^4.2.8",
+    "connect-mongo": "x.x",
+    "body-parser": "x.x",
+    "cookie-parser": "x.x",
+    "express-session": "x.x"
   }
 }
