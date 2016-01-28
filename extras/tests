@@ -1,6 +1,6 @@
 // Create User
 
-curl -X POST -H "Content-Type: application/json" "http://localhost:3000/createUser?email=andrew@andrew.com&firstName=first1&lastName=last1&password=123"
+curl -X POST -H "Content-Type: application/json" "http://localhost:8000/createUser?email=andrew@andrew.com&firstName=first1&lastName=last1&password=123"
 
 //Start Harvest
 
