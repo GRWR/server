@@ -1,8 +1,8 @@
 var express = require('express');
 var userController = require('./controllers/userController.js');
 var cropController = require('./controllers/cropController.js');
-var harvestController = require('./controllers/harvestController');
-var dataController = require('./controllers/dataController');
+var harvestController = require('./controllers/harvestController.js');
+var environmentalDataController = require('./controllers/dataController.js');
 
 module.exports = function(app) {
 	// User routes
@@ -18,27 +18,48 @@ module.exports = function(app) {
 	// - userId: String
 	// - hashedPassword: String
 	app.post('/createUser', userController.createUser);
-	// Method to verify that a user exists and that the hashed password is correct
-	// Parameters:
-	// - userId: String
-	// - hashedPassword: String
-	app.post('/verifyUser', userController.verifyUser);
 	// Crop routes
 	//
+	// Method to get all crops
+	// Return values:
+	// - crops: array
+	app.get('/getAllCrops', cropController.getAllCrops);
 	// Method to create a new crop. Returns an ID to reference the crop in subsequent REST calls
 	// Parameters:
 	// - name: String
 	// - subName: String
 	// - strain: String 
+	// Return values:
+	// - crop: Crop
 	app.post('/newCrop', cropController.newCrop);
 	// Harvest routes
-	app.post('/startHarvest', startHarvest);
-	app.post('/endHarvest', harvestController.endHarvest);
+	// 
+	// Method to begin a harvest. Returns an ID to reference the harvest in subsequent REST calls
+	// Parameters:
+	// - userId: String
+	// - cropId: String
+	// Return values:
+	// - harvest: Harvest
+	app.post('/startHarvest', _startHarvest);
+	// Method to end a harvest
+	// Parameters:
+	// - harvest: Harvest
+	app.post('/endHarvest', _endHarvest);
 	// Data routes
-	app.post('/addDataPoint', addDataPoint);
+	//
+	// Method to add a data point to a harvest
+	// Parameters:
+	// - timestamp: Date
+	// - temperature: Number
+	// - humidity: Number
+	// - uv: Number
+	// - lux: Number
+	// - co2: Number
+	app.get('/addEnvironmentalDataPoint', _addEnvironmentalDataPoint);
 };
 
-var startHarvest = function(req, res) {
+var _startHarvest = function(req, res) {
+	console.log(req.body);
 	userController.verifyUser(req, res, function(user) {
 		if (user) {
 			req.user = user;
@@ -51,21 +72,35 @@ var startHarvest = function(req, res) {
 		}
 	});
 };
-var addDataPoint = function(req, res) {
+var _endHarvest = function(req, res) {
 	userController.verifyUser(req, res, function(user) {
 		if (user) {
-			req.user = user;
+			harvestController.endHarvest(req, res);
+		}
+	});
+};
+var _addEnvironmentalDataPoint = function(req, res) {
+	userController.verifyUser(req, res, function(user) {
+		if (user) {
 			cropController.verifyCrop(req, res, function(crop) {
 				if (crop) {
 					req.crop = crop;
 					harvestController.verifyHarvest(req, res, function(harvest) {
 						if (harvest) {
 							req.harvest = harvest;
-							dataController.addDataPoint(req, res);
+							environmentalDataController.addEnvironmentalDataPoint(req, res);
 						}
 					});
 				}
 			});
+		}
+	});
+};
+var _getDataForHarvest = function(req, res) {
+	harvestController.verifyHarvest(req, res, function(harvest) {
+		if (harvest) {
+			req.harvest = harvest;
+			environmentalDataController.getDataForHarvest(req, res);
 		}
 	});
 };

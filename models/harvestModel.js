@@ -5,8 +5,7 @@ var HarvestSchema = new Schema({
 	endDate: Date,
 	active: Boolean,
 	crop: Schema.Types.ObjectId,
-	data: String,
-	metaData: [String],
-	user: Schema.Types.ObjectId
+	user: Schema.Types.ObjectId,
+	location: Array
 });
 var Harvest = mongoose.model("Harvest", HarvestSchema);

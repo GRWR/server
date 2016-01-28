@@ -16,6 +16,7 @@
     "connect-mongo": "x.x",
     "body-parser": "x.x",
     "cookie-parser": "x.x",
-    "express-session": "x.x"
+    "express-session": "x.x",
+    "aws-sdk": "x.x"
   }
 }

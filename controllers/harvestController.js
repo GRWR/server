@@ -15,9 +15,7 @@ exports.startHarvest = function(req, res) {
 		req.harvest = harvest;
 		req.user.harvests.push(harvest.id);
 		req.crop.harvests.push(harvest.id);
-		res.status(500).send({
-			harvestId: harvest.id
-		});
+		res.status(200).send(harvest);
 	});
 };
 exports.endHarvest = function(req, res) {

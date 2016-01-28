@@ -11,9 +11,16 @@ exports.newCrop = function(req, res) {
 			res.status(500).send();
 			return;
 		}
-		res.status(200).send({
-			cropId: crop.id
-		});
+		res.status(200).send(crop);
+	});
+};
+exports.getAllCrops = function(req, res) {
+	Crop.find({}, function(err, crops) {
+		if (err) {
+			res.status(500).send();
+			return;
+		}
+		res.status(200).send(crops);
 	});
 };
 exports.verifyCrop = function(req, res, callback) {
@@ -27,4 +34,4 @@ exports.verifyCrop = function(req, res, callback) {
 		console.log("crop verified");
 		callback(crop);
 	});
-}
+};

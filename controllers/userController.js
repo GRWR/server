@@ -3,9 +3,10 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
 function hashPW(pwd) {
-	return crypto.createHash('sha256').update(pwd).digest('base64').toString();
+	return crypto.createHash('sha256').update(pwd, 'utf8').digest('hex').toString();
 }
 exports.createUser = function(req, res) {
+	console.log(req.body);
 	var user = new User();
 	user.set('email', req.body.email);
 	var hashedPassword = hashPW(req.body.password);
@@ -24,8 +25,10 @@ exports.createUser = function(req, res) {
 	});	
 };
 exports.verifyUser = function(req, res, callback) {
-	console.log("userId: " + req.body.userId);
+	console.log(req.body.userId);
 	User.findById(req.body.userId, function(err, user) {
+		console.log(err);
+		console.log(user);
 		if (err) {
 			res.status(500).send();
 			callback(null);
