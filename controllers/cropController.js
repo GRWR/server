@@ -3,9 +3,9 @@ var Crop = mongoose.model('Crop');
 
 exports.newCrop = function(req, res) {
 	var crop = new Crop();
-	crop.set('name', req.body.name);
-	crop.set('subName', req.body.subName);
-	crop.set('strain', req.body.strain);
+	crop.set('name', req.query.name);
+	crop.set('subName', req.query.subName);
+	crop.set('strain', req.query.strain);
 	crop.save(function(err) {
 		if (err) {
 			res.status(500).send();
@@ -24,8 +24,8 @@ exports.getAllCrops = function(req, res) {
 	});
 };
 exports.verifyCrop = function(req, res, callback) {
-	console.log("cropId: " + req.body.cropId);
-	Crop.findById(req.body.cropId, function(err, crop) {
+	console.log("cropId: " + req.query.cropId);
+	Crop.findById(req.query.cropId, function(err, crop) {
 		if (err) {
 			res.status(500).send();
 			callback(null);

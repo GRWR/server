@@ -6,13 +6,13 @@ function hashPW(pwd) {
 	return crypto.createHash('sha256').update(pwd, 'utf8').digest('hex').toString();
 }
 exports.createUser = function(req, res) {
-	console.log(req.body);
+	console.log(req.query);
 	var user = new User();
-	user.set('email', req.body.email);
-	var hashedPassword = hashPW(req.body.password);
+	user.set('email', req.query.email);
+	var hashedPassword = hashPW(req.query.password);
 	user.set('hashedPassword', hashedPassword);
-	user.set('firstName', req.body.firstName);
-	user.set('lastName', req.body.lastName);
+	user.set('firstName', req.query.firstName);
+	user.set('lastName', req.query.lastName);
 	user.save(function(err) {
 		if (err) {
 			res.status(500).send();
@@ -25,8 +25,8 @@ exports.createUser = function(req, res) {
 	});	
 };
 exports.verifyUser = function(req, res, callback) {
-	console.log(req.body.userId);
-	User.findById(req.body.userId, function(err, user) {
+	console.log(req.query.userId);
+	User.findById(req.query.userId, function(err, user) {
 		console.log(err);
 		console.log(user);
 		if (err) {
@@ -34,7 +34,7 @@ exports.verifyUser = function(req, res, callback) {
 			callback(null);
 			return;
 		}
-		if (user.hashedPassword == req.body.hashedPassword) {
+		if (user.hashedPassword == req.query.hashedPassword) {
 			console.log("user verified");
 			callback(user);
 			return;

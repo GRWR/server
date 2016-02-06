@@ -5,3 +5,6 @@ curl -X POST -H "Content-Type: application/json" "http://localhost:8000/createUs
 //Start Harvest
 
 curl -X POST -H "Content-Type: application/json" "http://localhost:8000/startHarvest?userId=5689b7385383685d6bed77e1&hashedPassword=2XmIVEekE6u21gal0PRcO3gJ5v3iyD8N80JvH8m/7Zc=&cropId=5689c7bd792811be6b837043"
+
+//Add Environmental Data Point
+curl -X POST -H "Content-Type: application/json" "http://localhost:8000/addEnvironmentalDataPoint?userId=5689b7385383685d6bed77e1&hashedPassword=2XmIVEekE6u21gal0PRcO3gJ5v3iyD8N80JvH8m/7Zc=&cropId=5689c7bd792811be6b837043&harvestId=56b5407924db24316ccb11ff&timestamp=2016-02-06T00:50:17.657Z&temperature=1&humidity=1&uv=1.2&lux=2&co2=1"

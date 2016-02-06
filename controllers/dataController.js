@@ -3,14 +3,14 @@ var EnvironmentalData = mongoose.model('EnvironmentalData');
 
 exports.addEnvironmentalDataPoint = function(req, res) {
 	var dataPoint = new EnvironmentalData();
-	dataPoint.set('timestamp', req.body.timestamp);
+	dataPoint.set('timestamp', req.query.timestamp);
 	dataPoint.set('harvest', req.harvest.id);
-	dataPoint.set('temperature', req.body.temperature);
-	dataPoint.set('humidity', req.body.humidity);
-	dataPoint.set('uv', req.body.uv);
-	dataPoint.set('lux', req.body.lux);
-	dataPoint.set('co2', req.body.co2);
-	harvest.save(function(err) {
+	dataPoint.set('temperature', req.query.temperature);
+	dataPoint.set('humidity', req.query.humidity);
+	dataPoint.set('uv', req.query.uv);
+	dataPoint.set('lux', req.query.lux);
+	dataPoint.set('co2', req.query.co2);
+	dataPoint.save(function(err) {
 		if (err) {
 			res.status(500).send();
 			return;

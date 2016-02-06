@@ -4,8 +4,8 @@ var Harvest = mongoose.model('Harvest');
 exports.startHarvest = function(req, res) {
 	var harvest = new Harvest();
 	harvest.set('startDate', new Date());
-	harvest.set('user', req.body.userId);
-	harvest.set('crop', req.body.cropId);
+	harvest.set('user', req.query.userId);
+	harvest.set('crop', req.query.cropId);
 	harvest.set('active', true);
 	harvest.save(function(err) {
 		if (err) {
@@ -19,7 +19,7 @@ exports.startHarvest = function(req, res) {
 	});
 };
 exports.endHarvest = function(req, res) {
-	Harvest.findById(req.body.harvestId, function(err, harvest) {
+	Harvest.findById(req.query.harvestId, function(err, harvest) {
 		if (err) {
 			res.status(500).send();
 			return;
@@ -36,7 +36,7 @@ exports.endHarvest = function(req, res) {
 	});
 };
 exports.verifyHarvest = function(req, res, callback) {
-	Harvest.findById(req.body.harvestId, function(err, harvest) {
+	Harvest.findById(req.query.harvestId, function(err, harvest) {
 		if (err) {
 			res.status(500).send();
 			callback(null);

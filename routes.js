@@ -55,11 +55,10 @@ module.exports = function(app) {
 	// - uv: Number
 	// - lux: Number
 	// - co2: Number
-	app.get('/addEnvironmentalDataPoint', _addEnvironmentalDataPoint);
+	app.post('/addEnvironmentalDataPoint', _addEnvironmentalDataPoint);
 };
 
 var _startHarvest = function(req, res) {
-	console.log(req.body);
 	userController.verifyUser(req, res, function(user) {
 		if (user) {
 			req.user = user;

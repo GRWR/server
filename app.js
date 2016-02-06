@@ -14,16 +14,9 @@ var mongoStore = require('connect-mongo')({session: expressSession});
 var conn = mongoose.connect(mongooseURL);
 
 var app = express();
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(cookieParser());
-app.use(expressSession({
-	secret: 'SECRET',
-	cookie: {maxAge: 60*60*10000},
-	store: new mongoStore({
-		url: mongooseURL,
-		collection: 'Sessions'
-	})
-}));
 app.set('port', (process.env.PORT || 8000));
 
 require('./routes')(app);
