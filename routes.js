@@ -56,11 +56,14 @@ module.exports = function(app) {
 	// - lux: Number
 	// - co2: Number
 	app.post('/addEnvironmentalDataPoint', _addEnvironmentalDataPoint);
+	//Method to get all environmental data points for a particular harvest
+	app.get('/getDataForHarvest', _getDataForHarvest);
 };
 
 var _startHarvest = function(req, res) {
 	userController.verifyUser(req, res, function(user) {
 		if (user) {
+			
 			req.user = user;
 			cropController.verifyCrop(req, res, function(crop) {
 				if (crop) {
@@ -96,10 +99,14 @@ var _addEnvironmentalDataPoint = function(req, res) {
 	});
 };
 var _getDataForHarvest = function(req, res) {
-	harvestController.verifyHarvest(req, res, function(harvest) {
-		if (harvest) {
-			req.harvest = harvest;
-			environmentalDataController.getDataForHarvest(req, res);
+	userController.verifyUser(req, res, function(user) {
+		if (user) {
+			harvestController.verifyHarvest(req, res, function(harvest) {
+				if (harvest) {
+					req.harvest = harvest;
+					environmentalDataController.getDataForHarvest(req, res);
+				}
+			});
 		}
 	});
 };

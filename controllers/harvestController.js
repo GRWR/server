@@ -12,9 +12,9 @@ exports.startHarvest = function(req, res) {
 			res.status(500).send();
 			return;
 		}
-		req.harvest = harvest;
-		req.user.harvests.push(harvest.id);
-		req.crop.harvests.push(harvest.id);
+		console.log(harvest);
+		req.user.harvests.push(harvest._id);
+		req.user.save();
 		res.status(200).send(harvest);
 	});
 };
@@ -42,6 +42,7 @@ exports.verifyHarvest = function(req, res, callback) {
 			callback(null);
 			return;
 		}
+		console.log("harvest verified");
 		callback(harvest);
 	});
 };

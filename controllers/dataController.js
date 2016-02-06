@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var EnvironmentalData = mongoose.model('EnvironmentalData');
 
 exports.addEnvironmentalDataPoint = function(req, res) {
+	console.log("adding data point!");
 	var dataPoint = new EnvironmentalData();
 	dataPoint.set('timestamp', req.query.timestamp);
 	dataPoint.set('harvest', req.harvest.id);
@@ -19,7 +20,6 @@ exports.addEnvironmentalDataPoint = function(req, res) {
 	});
 }
 exports.getDataForHarvest = function(req, res) {
-	var body = "";
 	EnvironmentalData.find({harvest: req.harvest.id}).sort('timestamp').exec(function(err, dataPoints) {
 		if (err) {
 			res.status(500).send();
@@ -41,7 +41,7 @@ exports.getDataForHarvest = function(req, res) {
 			body += dataPoint.co2.toString();
 			if (i < dataPoints.length - 1) body += '\n';
 		}
-		res.body = body;
-		res.status(200).send();
+		console.log(body);
+		res.status(200).send(body);
 	});
 }
