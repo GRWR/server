@@ -5,6 +5,11 @@ var harvestController = require('./controllers/harvestController.js');
 var environmentalDataController = require('./controllers/dataController.js');
 
 module.exports = function(app) {
+
+	app.get('/', function(req, res) {
+		console.log('got it!');
+		res.send('hello world!');
+	})
 	// User routes
 	//
 	// Method to create a user the first time the device is used.
