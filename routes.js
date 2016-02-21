@@ -3,13 +3,14 @@ var userController = require('./controllers/userController.js');
 var cropController = require('./controllers/cropController.js');
 var harvestController = require('./controllers/harvestController.js');
 var environmentalDataController = require('./controllers/dataController.js');
+var spark = require('spark');
+
+spark.onEvent('environmentalData', function(data) {
+	var environmentalData = data.data;
+	environmentalDataController.addEnvironmentalDataPoint(environmentalData.harvestId, environmentalData.temperature, environmentalData.humidity, environmentalData.uv, environmentalData.lux, environmentalData.co2);
+});
 
 module.exports = function(app) {
-
-	app.get('/', function(req, res) {
-		console.log('got it!');
-		res.send('hello world!');
-	})
 	// User routes
 	//
 	// Method to create a user the first time the device is used.

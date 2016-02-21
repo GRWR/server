@@ -1,23 +1,17 @@
 var mongoose = require('mongoose');
 var EnvironmentalData = mongoose.model('EnvironmentalData');
 
-exports.addEnvironmentalDataPoint = function(req, res) {
+exports.addEnvironmentalDataPoint = function(harvestId, temp, humidity, uv, lux, co2) {
 	console.log("adding data point!");
 	var dataPoint = new EnvironmentalData();
-	dataPoint.set('timestamp', req.query.timestamp);
-	dataPoint.set('harvest', req.harvest.id);
-	dataPoint.set('temperature', req.query.temperature);
-	dataPoint.set('humidity', req.query.humidity);
-	dataPoint.set('uv', req.query.uv);
-	dataPoint.set('lux', req.query.lux);
-	dataPoint.set('co2', req.query.co2);
-	dataPoint.save(function(err) {
-		if (err) {
-			res.status(500).send();
-			return;
-		}
-		res.status(200).send();
-	});
+	dataPoint.set('timestamp', new Date());
+	dataPoint.set('harvest', harvestId);
+	dataPoint.set('temperature', temp);
+	dataPoint.set('humidity', humidity);
+	dataPoint.set('uv', uv);
+	dataPoint.set('lux', lux);
+	dataPoint.set('co2', co2);
+	dataPoint.save();
 }
 exports.getDataForHarvest = function(req, res) {
 	EnvironmentalData.find({harvest: req.harvest.id}).sort('timestamp').exec(function(err, dataPoints) {

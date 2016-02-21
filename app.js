@@ -19,6 +19,9 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(cookieParser());
 app.set('port', (process.env.PORT || 8000));
 
+var spark = require('spark');
+spark.login({accessToken: '0700fc7548ae1314981e2f828371ed67459a8e42'});
+
 require('./routes')(app);
 var server = app.listen(app.get('port'), function() {
   console.log('App listening on port: %s', server.address().port);
